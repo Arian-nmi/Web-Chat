@@ -92,16 +92,18 @@
 <body>
 
     <header>
-        <p>Username : my username</p>
-        <p>Name : my name</p>
+        <p>Username : {{ user.username }}</p>
+        <p>Name : {{ user.first_name }} {{ user.last_name }}</p>
         <a href="{% url 'logout' %}"><button>Logout</button></a>
     </header>
     
     <main>
-        <a href=""><section>
-            <img src="{% static 'face.png' %}">
-            <p>person's name</p>
-        </section></a>
+        {% for user in users %}
+            <a href="/chat_person/{{ user.id }}"><section>
+                <img src="{% static 'face.png' %}">
+                <p>{{ user.username }}</p>
+            </section></a>
+        {% endfor %}
     </main>
 
 </body>
