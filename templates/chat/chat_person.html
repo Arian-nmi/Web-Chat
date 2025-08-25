@@ -236,9 +236,9 @@
         <a href="{% url 'home' %}"><button>Back</button></a>
         <div>
             <img src="{% static 'face.png' %}">
-            <p>person's name</p>
+            <p>{{ person.first_name }} {{ person.last_name }}</p>
         </div>
-        <p class="name-of-sender">Me : the user's name</p>
+        <p class="name-of-sender">Me : {{ me.first_name }} {{ me.last_name }}</p>
     </header>
 
     <main id="messages-area">
@@ -262,10 +262,50 @@
                 <p style="overflow-wrap: anywhere;">Message from the other</p>
             </div>
         </section>
-
+    </main>
+    
     <footer>
         <textarea name="text" oninput="this.style.height = ''; this.style.height = this.scrollHeight +'px'" id="the-message-to-send"></textarea>
         <button id="send-message-button">Send</button>
     </footer>
+    <script>
+        const person_id = {{ person.id }}
+        const url = `ws://127.0.0.1:8000/websocket/${person_id}`;
+        const chat_websocket = new WebSocket(url);
+        
+        const massages_area = document.getElementById('messages-area');
+        const text_area = document.getElementById("the-message-to-send")
+        const send_button = document.getElementById("send-message-button")
+        send_button.addEventListener("click", function (){
+            chat_websocket.send(`{"type": "new_massage", "massage": "${text_area.value}"}`)
+            massages_area.insertAdjacentHTML('beforeend', `<section class="to">
+                <div class="details">
+                    <p>2024-01-30</p>
+                    <div class="status"><div></div><div></div></div>
+                    <p>10:55:02</p>
+                </div>
+                <div class="message">
+                    <p style="overflow-wrap: anywhere;">${text_area.value}</p>
+                </div>
+            </section>`)
+            
+            text_area.value = "";
+        });
+        
+        chat_websocket.onmessage = function (event){
+            const received_data = JSON.parse(event.data);
+            if (received_data.type_of_data === "new_massage"){
+                massages_area.insertAdjacentHTML('beforeend', `<section class="from">
+                    <div class="details">
+                        <p>2024-01-30</p>
+                        <p>10:55:02</p>
+                    </div>
+                    <div class="message">
+                        <p style="overflow-wrap: anywhere;">${received_data.data}</p>
+                    </div>
+                </section>`)
+            }
+        }
+    </script>    
 </body>
 </html>
