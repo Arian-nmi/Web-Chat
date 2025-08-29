@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.db.models import Q
 from django.contrib.auth.models import User
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
+from .models import Message
 
 
 class Main(View):
@@ -76,6 +78,20 @@ class Home(View):
         return redirect("main")
 
 
+@method_decorator(login_required, name="dispatch")
 class ChatPerson(View):
     def get(self, request, id):
-        return render(request, 'chat/chat_person.html', context={"person": User.objects.get(id=id), "me": request.user})
+        person = User.objects.get(id=id)
+        me = request.user
+        messages = Message.objects.filter(
+            Q(from_who=me, to_who=person)
+            |
+            Q(from_who=person, to_who=me)
+        ).order_by("date", "time")
+        context = {
+            "person": person,
+            "messages": messages,
+            "me":me
+        }
+
+        return render(request,'chat/chat_person.html', context=context)

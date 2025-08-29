@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Message(models.Model):
-    from_who = models.ForeignKey(User, on_delete=models.PROTECT, related_name='from_user', default=None)
-    to_who = models.ForeignKey(User, on_delete=models.PROTECT, related_name='to_user', default=None)
+    from_who = models.ForeignKey(User, on_delete=models.PROTECT, related_name='from_user')
+    to_who = models.ForeignKey(User, on_delete=models.PROTECT, related_name='to_user')
     message = models.TextField()
     date = models.DateField(null=True)
     time = models.TimeField(null=True)
@@ -15,8 +15,8 @@ class Message(models.Model):
 
 
 class UserChannel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT, default=None)
-    channel_name = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    channel_name = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.channel_name
