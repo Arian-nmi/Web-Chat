@@ -2,6 +2,7 @@
 
 A real‑time chat web application built with Django Channels and WebSockets.
 This project demonstrates how to add asynchronous, bidirectional communication to a Django project – moving beyond traditional HTTP request/response cycle.
+
 🚀 Features
 
     Real‑time messaging with WebSockets
@@ -15,11 +16,12 @@ This project demonstrates how to add asynchronous, bidirectional communication t
     Simple and clean UI (HTML/CSS)
 
 🛠️ Tech Stack
-    Category	Technologies
-    Backend	Django, Django Channels
-    Asynchronous	ASGI, WebSockets
-    Database	SQLite / PostgreSQL (configurable)
-    Frontend	HTML, CSS (custom), JavaScript (WebSocket API)
+
+    Category	      Technologies
+    Backend	Django,   Django Channels
+    Asynchronous	  ASGI, WebSockets
+    Database          SQLite / PostgreSQL (configurable)
+    Frontend	      HTML, CSS (custom), JavaScript (WebSocket API)
 
 🧠 How It Works (Architecture)
 
