@@ -15,11 +15,11 @@ This project demonstrates how to add asynchronous, bidirectional communication t
     Simple and clean UI (HTML/CSS)
 
 🛠️ Tech Stack
-Category	Technologies
-Backend	Django, Django Channels
-Asynchronous	ASGI, WebSockets
-Database	SQLite / PostgreSQL (configurable)
-Frontend	HTML, CSS (custom), JavaScript (WebSocket API)
+    Category	Technologies
+    Backend	Django, Django Channels
+    Asynchronous	ASGI, WebSockets
+    Database	SQLite / PostgreSQL (configurable)
+    Frontend	HTML, CSS (custom), JavaScript (WebSocket API)
 
 🧠 How It Works (Architecture)
 
